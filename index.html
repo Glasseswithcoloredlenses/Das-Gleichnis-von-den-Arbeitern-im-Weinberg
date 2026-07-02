@@ -1522,18 +1522,25 @@ $(document).on('mouseup', '.hold-button', function() {
     |auswahl)[[[Dort scheint jemand zu kommen... |Gutsherr am Markt]]]
 &lt;/div&gt;]
 
-&lt;!-- Das Iframe bekommt ein Style, das es versteckt, aber im Browser am Leben hält --&gt;
-&lt;iframe id=&quot;yt-bgm&quot; width=&quot;0&quot; height=&quot;0&quot; src=&quot;https://www.youtube.com/embed/3b7UXyjre7E?enablejsapi=1&amp;autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=3b7UXyjre7E&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; style=&quot;position: fixed; top: -100px; left: -100px; width: 1px; height: 1px; pointer-events: none;&quot;&gt;&lt;/iframe&gt;
+&lt;iframe id=&quot;yt-bgm-neu&quot; width=&quot;0&quot; height=&quot;0&quot; src=&quot;https://www.youtube.com/embed/3b7UXyjre7E?enablejsapi=1&amp;autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=3b7UXyjre7E&quot; frameborder=&quot;0&quot; allow=&quot;autoplay; encrypted-media&quot; style=&quot;position: fixed; top: -100px; left: -100px; width: 1px; height: 1px; pointer-events: none;&quot;&gt;&lt;/iframe&gt;
 
 &lt;script&gt;
-    // RETTUNGSTRICK: Wir holen das Iframe aus der Twine-Passage heraus 
-    // und hängen es direkt an den &lt;body&gt; des Browsers. 
-    // Dadurch überlebt es alle zukünftigen Passagenwechsel!
-    var ytFrame = document.getElementById(&#39;yt-bgm&#39;);
-    if (ytFrame &amp;&amp; ytFrame.parentNode !== document.body) {
-        document.body.appendChild(ytFrame);
+    // 1. ALTE MUSIK GEZIELT LÖSCHEN
+    var oldFrame = document.getElementById(&#39;yt-bgm&#39;);
+    if (oldFrame) {
+        oldFrame.remove();
     }
 
+    // 2. NEUE MUSIK RETTEN &amp; ID AKTUALISIEREN
+    var newFrame = document.getElementById(&#39;yt-bgm-neu&#39;);
+    if (newFrame) {
+        newFrame.id = &#39;yt-bgm&#39;; // Wird zur offiziellen aktuellen Musik
+        if (newFrame.parentNode !== document.body) {
+            document.body.appendChild(newFrame);
+        }
+    }
+
+    // 3. LAUTSTÄRKE UND START-BEFEHL
     function activateAudio() {
         var ytFrame = document.getElementById(&#39;yt-bgm&#39;);
         if (ytFrame) {
@@ -1543,11 +1550,31 @@ $(document).on('mouseup', '.hold-button', function() {
         }
     }
     
-    setTimeout(activateAudio, 1000);
-    setTimeout(activateAudio, 2000);
+    // Trigger für den Start
+    setTimeout(activateAudio, 600);
+    setTimeout(activateAudio, 1500);
     document.addEventListener(&#39;click&#39;, activateAudio, { once: true });
-    document.addEventListener(&#39;mousemove&#39;, activateAudio, { once: true });
-    document.addEventListener(&#39;touchstart&#39;, activateAudio, { once: true });
+    
+    
+    (function() {
+        // 1. Sound-Objekt im Speicher erzeugen
+        var sfx = new Audio(&quot;https://cdn.pixabay.com/audio/2022/03/15/audio_d5ea1ec435.mp3&quot;);
+        
+        // 2. Einstellungen für den Effekt
+        sfx.volume = 0.6; // Lautstärke auf 60% setzen (Wert von 0.0 bis 1.0)
+        sfx.loop = false; // Der Sound soll nur einmal kurz abspielen
+        
+        // 3. Sofort abspielen beim Laden
+        sfx.play().catch(function(error) {
+            console.log(&quot;Autoplay-Schutz aktiv: Sound spielt ab, sobald der Spieler interagiert.&quot;);
+            
+            // Falls der Browser den Sound blockiert (weil der Spieler noch nirgends geklickt hat),
+            // feuert der Sound stattdessen garantiert beim allerersten Klick ab:
+            document.addEventListener(&#39;click&#39;, function() {
+                sfx.play();
+            }, { once: true });
+        });
+    })();
 &lt;/script&gt;</tw-passagedata><tw-passagedata pid="32" name="Pfad Arbeiter" tags="intro-scene" position="575,600" size="100,100">&lt;div class=&quot;video-background-container&quot;&gt;
     &lt;video autoplay loop muted playsinline&gt;
         &lt;source src=&quot;https://i.imgur.com/sBfWLkU.mp4&quot; type=&quot;video/mp4&quot;&gt;
