@@ -1554,27 +1554,6 @@ $(document).on('mouseup', '.hold-button', function() {
     setTimeout(activateAudio, 600);
     setTimeout(activateAudio, 1500);
     document.addEventListener(&#39;click&#39;, activateAudio, { once: true });
-    
-    
-    (function() {
-        // 1. Sound-Objekt im Speicher erzeugen
-        var sfx = new Audio(&quot;https://cdn.pixabay.com/audio/2022/03/15/audio_d5ea1ec435.mp3&quot;);
-        
-        // 2. Einstellungen für den Effekt
-        sfx.volume = 0.6; // Lautstärke auf 60% setzen (Wert von 0.0 bis 1.0)
-        sfx.loop = false; // Der Sound soll nur einmal kurz abspielen
-        
-        // 3. Sofort abspielen beim Laden
-        sfx.play().catch(function(error) {
-            console.log(&quot;Autoplay-Schutz aktiv: Sound spielt ab, sobald der Spieler interagiert.&quot;);
-            
-            // Falls der Browser den Sound blockiert (weil der Spieler noch nirgends geklickt hat),
-            // feuert der Sound stattdessen garantiert beim allerersten Klick ab:
-            document.addEventListener(&#39;click&#39;, function() {
-                sfx.play();
-            }, { once: true });
-        });
-    })();
 &lt;/script&gt;</tw-passagedata><tw-passagedata pid="32" name="Pfad Arbeiter" tags="intro-scene" position="575,600" size="100,100">&lt;div class=&quot;video-background-container&quot;&gt;
     &lt;video autoplay loop muted playsinline&gt;
         &lt;source src=&quot;https://i.imgur.com/sBfWLkU.mp4&quot; type=&quot;video/mp4&quot;&gt;
@@ -2417,7 +2396,7 @@ $(document).on('mouseup', '.hold-button', function() {
     })();
 &lt;/script&gt;</tw-passagedata><tw-passagedata pid="66" name="Untitled Passage" tags="start main-menu" position="75,50" size="100,100">&lt;!-- Der große, atmosphärische Titel des Gleichnisses --&gt;
 &lt;div class=&quot;main-title&quot;&gt;Das Gleichnis von den Arbeitern im Weinberg&lt;/div&gt;
-&lt;div class=&quot;sub-title&quot;&gt;Ein Abenteuer wartet...&lt;/div&gt;
+&lt;div class=&quot;sub-title&quot;&gt;Praxisprojekt von (text-color:white)[Lukas Klasner] im Seminar Religiöses Lernen in einer Kultur der Digitalität.&lt;/div&gt;
 
     [[Lade Spiel|Start]]
 &lt;/div&gt;</tw-passagedata></tw-storydata>
